@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="keywords" content="" />
+<link rel="icon" href="/static/images/logo-ico.png" type="image/ico">
+<link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+<link href="/static/css/newStyle.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="/static/css/fonts.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="signupform">
+        <h1 style="font-family: Calibri;">مستشفى الشفاء بادلب</h1>
+	    <div class="container">
+		
+            <div class="agile_info">
+                <div class="w3l_form">
+                    <h4 style="text-align: right; font-family: Calibri;">يوم السبت</h4>
+                    <p style="text-align: right; font-family: Calibri;"> الجِرَاْحَةُ العَاْمَّةْ ، الجِرَاْحَةُ العَظْمِيَّةْ ، الجِرَاْحَةُ العَصَبِيَّةْ، الجِرَاْحَةُ الوِعَاْئِيَّةْ <br> دَاخِلية الصَدْرِيَّةْ ، دَاخِلية العَاْمَّةْ، دَاخِلية القَلْبِيَّةْ </p>
+
+                    <h4 style="text-align: right; font-family: Calibri;">يوم الأحد</h4>
+                    <p style="text-align: right; font-family: Calibri;"> الجِرَاْحَةُ العَاْمَّةْ <br>  دَاخِلية العَاْمَّةْ، دَاخِلية القَلْبِيَّةْ </p>
+
+                    <h4 style="text-align: right; font-family: Calibri;">يوم الإثنين</h4>
+                    <p style="text-align: right; font-family: Calibri;">الجِرَاْحَةُ العَاْمَّةْ، الجِرَاْحَةُ العَظْمِيَّةْ<br> دَاخِلية الصَدْرِيَّة، دَاخِلية العَاْمَّةْ، دَاخِلية القَلْبِيَّةْ</p>
+
+                    <h4 style="text-align: right; font-family: Calibri;">يوم الثلاثاء</h4>
+                    <p style="text-align: right; font-family: Calibri;">الجِرَاْحَةُ العَاْمَّةْ ، الجِرَاْحَةُ العَظْمِيَّةْ ، الجِرَاْحَةُ البَوْلِيَّةْ <br> دَاخِلية العَاْمَّةْ، دَاخِلية القَلْبِيَّة</p>
+
+                    <h4 style="text-align: right; font-family: Calibri;">يوم الأربعاء</h4>
+                    <p style="text-align: right; font-family: Calibri;">الجِرَاْحَةُ العَاْمَّةْ، الجِرَاْحَةُ العَظْمِيَّةْ، الجِرَاْحَةُ الوِعَاْئِيَّةْ<br> دَاخِلية الصَدْرِيَّة تنظير، دَاخِلية العَاْمَّةْ، دَاخِلية القَلْبِيَّةْ</p>
+
+                    <h4 style="text-align: right; font-family: Calibri;">يوم الخميس</h4>
+                    <p style="text-align: right; font-family: Calibri;">الجِرَاْحَةُ العَاْمَّةْ، الجِرَاْحَةُ العَصَبِيَّةْ، الجِرَاْحَةُ الوِعَاْئِيَّةْ، الجِرَاْحَةُ الصَدْرِيَّةْْ</p>
+
+                </div>
+
+                <div class="w3_info" style="width: 372px">
+                    <h2 style="font-family: Calibri;">عيادة جديدة</h2>
+{#                    <p>You can only make an appointment for tomorrow</p>#}
+                    <form action="/newAppointment/" method="post">
+                        {% csrf_token %}
+
+                            <div class="input-group">
+                                <input type="text" name="name" style="font-family: Calibri;" placeholder="اسم المريض" required="">
+                            </div>
+
+                            <div class="input-group">
+                                <input type="text" name="age" style="font-family: Calibri" placeholder="العمر" required="">
+                            </div>
+
+                            <div class="input-group">
+                                <input type="text" name="address" style="font-family: Calibri" placeholder="السكن" required="">
+                            </div>
+
+                            <div class="input-group">
+                                <input type="text" name="phone" style="font-family: Calibri" placeholder="الهاتف" required="">
+                            </div>
+
+                            <div class="input-group"  style="font-family: Calibri;">
+                                <input type="radio" name="sex" value="ذكر" required="">ذكر<br>
+                                <input type="radio" name="sex" value="انثى">انثى
+                            </div>
+
+                            <div class="input-group" style="font-family: Calibri">
+                                <input type="radio" name="marriage" value="متزوج" required="">متزوج<br>
+                                <input type="radio" name="marriage" value="ليس متزوج">ليس متزوج
+                            </div>
+
+                            <div class="input-group">
+                                {% for department in departments %}
+                                    <label style="font-family: Calibri;">
+                                    {% if department.name == 'Surgery' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfSurgery }}<br>
+                                    {% elif department.name == 'Orthopedic' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfOrthopedic }}<br>
+                                    {% elif department.name == 'Neurosurgery' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfNeurosurgery }}<br>
+                                    {% elif department.name == 'Vascular Surgery' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfVascularSurgery }}<br>
+                                    {% elif department.name == 'Urology' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfUrology }}<br>
+                                    {% elif department.name == 'Thoracic Surgery' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfThoracicSurgery }}<br>
+                                    {% elif department.name == 'Internal Surgery' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfInternalSurgery }}<br>
+                                    {% elif department.name == 'Internal Cardiology - 1' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfInternalCardiology1 }}<br>
+                                    {% elif department.name == 'Internal Cardiology - 2' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfInternalCardiology2 }}<br>
+                                    {% elif department.name == 'Internal Thoracic' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfInternalThoracic }}<br>
+                                    {% elif department.name == 'Thoracic Endoscopy' %}
+                                        <input type="radio" name="department" value="{{ department.name }}" required=""> {{ department.arabic_name }} : {{ department.count }} / {{ countOfThoracicEndoscopy }}<br>
+                                    {% endif %}
+                                    </label>
+                                {% endfor %}
+                            </div>
+
+                            <button class="btn btn-danger btn-block" style="font-family: Calibri; font-size: 20px" type="submit">ارسال</button >
+                            <h2 style="color: red">{{ message }}</h2>
+                    </form>
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+		    <div class="footer">
+                <p>Copyright &copy; 2021.AL SHIFAA All rights reserved</p>
+            </div>
+
+	    </div>
+
+    </div>
+</body>
+</html>
